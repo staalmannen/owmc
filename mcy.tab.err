@@ -1,0 +1,3 @@
+mcy.tab.c(1325): Warning! W102: Type mismatch (warning)
+mcy.tab.c(1325): Note! I2003: source conversion type is 'void *'
+mcy.tab.c(1325): Note! I2004: target conversion type is 'int'

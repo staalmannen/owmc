@@ -1,0 +1,38 @@
+This is a port of the Wine messsage compiler (wmc) to Open Watcom.
+Like the binutils windmc, it serves as an alternative to the Visual Studio MC.exe.
+
+The sources were imported from Wine release 1.5.22 and the first port is simply a copy of wmc and
+the required objects from libwine and libport with minor source code changes. If the Open Watcom (v2)
+compiler already contains the needed header (either in "h", "h/nt" or "h/win"), the wine-provided header
+is deleted.
+
+The licensing is thus also (L)GPL just like the parent project.
+
+
+TODO:
+* slim down:
+Many functions provided by the wine library files will be duplicates of functions provided by the
+Watcom C-library. The aim is to slim down the port as much as possible by changing the source to use the Watcom
+C-library functions and delete as much as possible of the Wine library provided functions.
+* test
+The port needs to be "battle hardened". Hopefully various watcom users will find this useful and get it in a better shape.
+* upstream?
+It would be awesome if the upstream Open Watcom (v2) would include a messsage compiler. If this would become acceptable, that would be cool.
+
+
+To build:
+cd to libport, run wmake, move libport.lib to source root
+cd to libwine, run wmake, move libwine.lib to source root
+(ok silly I know, but I am not familiar with how Windows handles directories)
+run wmake in source root
+- todo: make building the libraries an automatic part of the source root makefile.
+
+To install, simply copy the resulting binary to $WATCOM\binnt
+($WATCOM = install root of Open Watcom, for example C:\WATCOM)
+
+
+
+
+
+
+
