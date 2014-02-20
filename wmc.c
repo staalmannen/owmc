@@ -32,7 +32,7 @@
 #include "write.h"
 
 static const char usage[] =
-	"Usage: wmc [options...] [inputfile.mc]\n"
+	"Usage: owmc [options...] [inputfile.mc]\n"
 	"   -B x        Set output byte-order x={n[ative], l[ittle], b[ig]}\n"
 	"               (default is n[ative] which equals "
 #ifdef WORDS_BIGENDIAN
@@ -49,8 +49,8 @@ static const char usage[] =
 	"   -d          Use decimal values in output\n"
 	"   -D		Set debug flag\n"
 	"   -e          Extension for header file (default: .h)\n"
-	"   -h          This message\n"
-	"   -H file     Write headerfile to file (default is inputfile.h)\n"
+	"   -H          This message\n"
+	"   -h file     Write headerfile to file (default is inputfile.h)\n"
 	"   -i          Inline messagetable(s)\n"
 	"   -o file     Output to file (default is inputfile.rc)\n"
 	"   -O fmt      Set output format (rc, res, pot)\n"
@@ -227,11 +227,11 @@ int main(int argc,char *argv[])
 		case 'D':
 			dodebug = 1;
 			break;
-		case 'h':
+		case 'H':
 			printf("%s", usage);
 			exit(0);
 			/* No return */
-		case 'H':
+		case 'h':
 			header_name = xstrdup(optarg);
 			break;
 		case 'i':
