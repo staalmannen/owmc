@@ -195,7 +195,7 @@ int main(int argc,char *argv[])
 		  /*ASCII output*/
 		  unicodeout = 0;
 		  break;
-		case 'b'
+		case 'b':
 		  /* placeholder, keep default */
 		  break;
 		case 'B':
@@ -253,8 +253,8 @@ int main(int argc,char *argv[])
 		case 'P':
 			po_dir = xstrdup( optarg );
                         break;
-		case 'r'
-			output_path = xstrdup(optarg);
+		case 'r':
+			output_path = xstrdup( optarg );
 			if(!output_name)
 			  {
 			    output_name = dup_basename(input_name, ".mc");
