@@ -41,15 +41,21 @@ static const char usage[] =
 	"little"
 #endif
 	"-endian)\n"
+	"   -a          ASCII input (default)\n"
+	"   -A          ASCII output format\n"
+	"   -b          binprefix\n"
 	"   -c          Set 'custom-bit' in values\n"
+	"   -C          codepages convert input to UTF16\n"
 	"   -d          Use decimal values in output\n"
 	"   -D		Set debug flag\n"
+	"   -e          Extension for header file (default: .h)\n"
 	"   -h          This message\n"
 	"   -H file     Write headerfile to file (default is inputfile.h)\n"
 	"   -i          Inline messagetable(s)\n"
 	"   -o file     Output to file (default is inputfile.rc)\n"
 	"   -O fmt      Set output format (rc, res, pot)\n"
 	"   -P dir      Directory where to find po files\n"
+	"   -r          destination directory of rc-files and bin\n"
 	"   -u          Inputfile is in unicode\n"
 	"   -U          Output unicode messagetable(s)\n"
 	"   -v          Show supported codepages and languages\n"
@@ -61,8 +67,8 @@ static const char usage[] =
 	;
 
 static const char version_string[] =
-	"Wine Message Compiler version " PACKAGE_VERSION "\n"
-	"Copyright 2000 Bertho A. Stultiens\n"
+	"Open Watcom Message Compiler version " PACKAGE_VERSION "\n"
+	"forked from Wine Message Compiler: Copyright 2000 Bertho A. Stultiens \n"
 	;
 
 /*
@@ -108,6 +114,7 @@ static int dodebug = 0;
 static char *po_dir;
 
 char *output_name = NULL;	/* The name given by the -o option */
+char *output_path = NULL;	/* added intermediate to give absolute paths for .rc output */
 char *input_name = NULL;	/* The name given on the command-line */
 char *header_name = NULL;	/* The name given by the -H option */
 
@@ -142,6 +149,7 @@ static void exit_on_signal( int sig )
     exit(1);  /* this will call the atexit functions */
 }
 
+
 int main(int argc,char *argv[])
 {
 	extern char* optarg;
@@ -164,11 +172,11 @@ int main(int argc,char *argv[])
 
 	/* First rebuild the commandline to put in destination */
 	/* Could be done through env[], but not all OS-es support it */
-	cmdlen = 5; /* for "wmc " and \0 */
+	cmdlen = 5; /* for "owmc " and \0 */
 	for(i = 1; i < argc; i++)
 		cmdlen += strlen(argv[i]) + 1;
 	cmdline = xmalloc(cmdlen);
-	strcpy(cmdline, "wmc ");
+	strcpy(cmdline, "owmc ");
 	for(i = 1; i < argc; i++)
 	{
 		strcat(cmdline, argv[i]);
@@ -176,10 +184,20 @@ int main(int argc,char *argv[])
 			strcat(cmdline, " ");
 	}
 
-	while((optc = getopt(argc, argv, "B:cdDhH:io:O:P:uUvVW")) != EOF)
+	while((optc = getopt(argc, argv, "aA:bB:cdDhH:io:O:Pr:uUvVW")) != EOF)
 	{
 		switch(optc)
 		{
+		case 'a':
+		  unicodein = 0;
+		  break;
+		case 'A':
+		  /*ASCII output*/
+		  unicodeout = 0;
+		  break;
+		case 'b'
+		  /* placeholder, keep default */
+		  break;
 		case 'B':
 			switch(optarg[0])
 			{
@@ -235,6 +253,16 @@ int main(int argc,char *argv[])
 		case 'P':
 			po_dir = xstrdup( optarg );
                         break;
+		case 'r'
+			output_path = xstrdup(optarg);
+			if(!output_name)
+			  {
+			    output_name = dup_basename(input_name, ".mc");
+			    strcat(output_name, ".rc");
+			  }
+			strcat(output_path, output_name);
+			output_name = output_path;
+			break;
 		case 'u':
 			unicodein = 1;
 			break;

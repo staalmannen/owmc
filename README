@@ -6,7 +6,7 @@ the required objects from libwine and libport with minor source code changes. If
 compiler already contains the needed header (either in "h", "h/nt" or "h/win"), the wine-provided header
 is deleted.
 
-For example ReactOS needs options -A and -r for the message compiler. Those functions imported from binutils windmc.
+For example ReactOS needs options -A and -r for the message compiler. Those functions inspired from binutils windmc.
 
 The licensing is thus also (L)GPL just like the parent projects.
 
