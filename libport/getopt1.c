@@ -34,6 +34,8 @@
 # include "getopt.h"
 #endif
 
+#define _getopt_internal getopt /*provided by Watcom C runtime */
+
 #if !defined __STDC__ || !__STDC__
 /* This is a separate conditional since some stdc systems
    reject `defined (const)'.  */
