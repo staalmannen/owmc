@@ -3,7 +3,6 @@ CFLAGS = -i. -aa -fp5 -oneaxl -ze -zq -zw -bt=nt
 LINKER = wlink
 LFLAGS = option quiet
 LIBS = libport/libport.lib libwine/libwine.lib
-OBJ=".obj"
 
 OBJS = mcl.obj mcy.tab.obj po.obj lang.obj utils.obj wmc.obj write.obj
 
